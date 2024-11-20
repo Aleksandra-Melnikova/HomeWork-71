@@ -13,3 +13,7 @@ export interface IMenuItem {
 export interface IMenuItemList {
   [id: string]: IForm;
 }
+export interface MenuItemsCart {
+  dish: IMenuItem;
+  amount: number;
+}

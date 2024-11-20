@@ -1,12 +1,15 @@
 
-import React from 'react';
+import React, { MouseEventHandler } from 'react';
 import { IMenuItem } from '../../types';
 
-
-const MenuItemClient:React.FC<IMenuItem> = ({id,
+export interface IMenuItemClientProps  extends IMenuItem{
+  onClick?: MouseEventHandler;
+}
+const MenuItemClient:React.FC<IMenuItemClientProps> = ({id,
   imageUrl,
   title,
   price,
+  onClick,
   }) => {
 
 
@@ -17,12 +20,13 @@ const MenuItemClient:React.FC<IMenuItem> = ({id,
   }
   return (
       <div
+        onClick={onClick}
         id = {id}
         className={
           'border border-1 border-dark-subtle  rounded-2 d-flex justify-content-between align-items-center menu-item mb-2'
         }
       >
-        <div className={'col-4 img-block'}>
+        <div className={'col-4 img-block img-block-client'}>
           <img className={'photo-img'} src={imageUrl} alt={title}/>
         </div>
         <div className={'col-3  fs-2 '}>{title}</div>

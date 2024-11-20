@@ -11,8 +11,8 @@
 }
 
 .photo-img {
-  width: 100%;
-  height: auto;
+  width: auto;
+  height: 190px;
   border-radius: 15px;
 }
 /*.photo-img-client{*/
@@ -20,3 +20,7 @@
 /*  width: 100%;*/
 /*  height: auto;*/
 /*}*/
+.img-block-client{
+  width: 70%;
+  height: 200px;
+}
