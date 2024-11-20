@@ -1,16 +1,21 @@
 import React from 'react';
-import CartItem from '../CartItem.tsx';
+import CartOneDish from '../CartOneDish.tsx';
 import { MenuItemsCart } from '../../../types';
+import { useDispatch } from 'react-redux';
+import { deleteDishFromCart } from '../../../store/slices/cardSlice.ts';
 
 interface Props {
   cart: MenuItemsCart [];
+  total: number;
 }
 
-const CartDishes: React.FC<Props> = ({cart}) => {
-  const total = cart.reduce((acc, cartDish) => {
-    acc = acc + cartDish.dish.price * cartDish.amount;
-    return acc + 150;
-  }, 0);
+const CartDishes: React.FC<Props> = ({cart, total}) => {
+  const dispatch = useDispatch();
+
+  // const total = cart.reduce((acc, cartDish) => {
+  //   acc = acc + cartDish.dish.price * cartDish.amount;
+  //   return acc;
+  // }, 150);
 
   let cartList = (
     <div className="alert alert-primary" role="alert">
@@ -23,11 +28,11 @@ const CartDishes: React.FC<Props> = ({cart}) => {
     cartList = (
       <div>
         {cart.map(cartDish => (
-          <CartItem key={cartDish.dish.id} cartDish={cartDish}/>
+          <CartOneDish onDelete={()=>dispatch(deleteDishFromCart(cartDish))} key={cartDish.dish.id} cartDish={cartDish}/>
         ))}
-        <div className="row align-items-center justify-content-between">
-        <div className="col-6">Delivery</div>
-        <div className="col-6">150 KGS</div>
+        <div className="row align-items-center justify-content-between p-2">
+        <div className="col-6 ">Delivery</div>
+        <div className="col-5  ">150 KGS</div>
       </div>
         <hr/>
 

@@ -30,9 +30,21 @@ addDish: (state, {payload:dish}:PayloadAction<IMenuItem>)=>{
       state.cartDishes= [...cartCopy];
     }
 },
-clearCart:(state)=>{
-    state.cartDishes=[];
-},
+    deleteDishFromCart:(state, {payload:dish}:PayloadAction<MenuItemsCart>)=>{
+
+      const indexDish = state.cartDishes.findIndex(dishCart => dishCart.dish.id === dish.dish.id);
+        const cartCopy = [...state.cartDishes];
+        const copyDishCart = {...cartCopy[indexDish]};
+        copyDishCart.amount--;
+        cartCopy[indexDish] = copyDishCart;
+        state.cartDishes= [...cartCopy];
+
+    },
+
+
+// clearCart:(state)=>{
+//     state.cartDishes=[];
+// },
     updateCart: (state, {payload:dishes}:PayloadAction<IMenuItem[]>)=>{
       state.cartDishes = state.cartDishes.map((cartDish) => {
           const updateDish = dishes.find(d => d.id === cartDish.dish.id);
@@ -50,4 +62,4 @@ clearCart:(state)=>{
 
 });
 export const cartReducer = cartSlice.reducer;
-export const {addDish,clearCart,updateCart} = cartSlice.actions;
+export const {addDish,deleteDishFromCart,updateCart} = cartSlice.actions;

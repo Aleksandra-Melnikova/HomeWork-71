@@ -14,7 +14,6 @@ const ClientHome = () => {
   const isFetchLoading = useAppSelector(selectFetchLoading);
   const dispatch = useAppDispatch();
   const cartDishes = useAppSelector( selectCartDishes);
-  const total = 0;
   const fetchDishes = useCallback(async () => {
     await dispatch(fetchAllMenuItems());
   }, [dispatch]);
@@ -24,14 +23,19 @@ const ClientHome = () => {
     }
   }, [fetchDishes]);
 
+  const total = cartDishes.reduce((acc, cartDish) => {
+    acc = acc + cartDish.dish.price * cartDish.amount;
+    return acc;
+  }, 150);
+
   return (
     <>
     <Modal show={showModal} title={'Your order:'}  closeModal={() => setShowModal(false)}> <>
-      <CartDishes cart={cartDishes}/>
-      {cartDishes.length > 0 ?
-        <div className="text-center">
-        </div> : null
-      }
+      <CartDishes total={total} cart={cartDishes}/>
+      {/*{cartDishes.length > 0 ?*/}
+      {/*  <div className="text-center">*/}
+      {/*  </div> : null*/}
+      {/*}*/}
     </>
     </Modal>
     <div>
@@ -61,7 +65,7 @@ const ClientHome = () => {
         </p>
       )}
       <div className={'d-flex justify-content-between align-items-center'}>
-        <div>Order total: {total} KGS</div>
+        <div>Order total (include delivery 150 KGS): {total} KGS</div>
         <button type={'button'} className={'btn btn-primary'} onClick={()=>setShowModal(true)}>Checkout</button>
       </div>
     </div></>
