@@ -6,7 +6,7 @@ import { useCallback, useEffect } from "react";
 import {
    deleteOneMenuItem,
  fetchAllMenuItems,
-} from '../../store/thunks/contactsThunk.ts';
+} from '../../store/thunks/pizzaThunk.ts';
 import MenuItem from "../../components/menuItem/menuItem.tsx";
 import Spinner from "../../components/UI/Spinner/Spinner.tsx";
 import { useNavigate } from 'react-router-dom';

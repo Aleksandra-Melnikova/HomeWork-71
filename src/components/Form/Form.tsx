@@ -5,7 +5,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import {
    createMenuItems,
    editMenuItem,
-} from '../../store/thunks/contactsThunk.ts';
+} from '../../store/thunks/pizzaThunk.ts';
 import { useAppDispatch, useAppSelector } from "../../app/hooks.ts";
 import {
   selectAddLoading,

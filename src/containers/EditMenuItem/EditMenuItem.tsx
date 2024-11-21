@@ -9,7 +9,7 @@ import {
 
 import { useParams } from "react-router-dom";
 import { useCallback, useEffect } from "react";
-import {  getOneMenuItemById } from '../../store/thunks/contactsThunk.ts';
+import {  getOneMenuItemById } from '../../store/thunks/pizzaThunk.ts';
 
 const EditMenuItem = () => {
   const { id } = useParams();

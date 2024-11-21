@@ -2,11 +2,18 @@ import Spinner from '../../components/UI/Spinner/Spinner.tsx';
 import { useAppDispatch, useAppSelector } from '../../app/hooks.ts';
 import { selectFetchLoading, selectMenuItems } from '../../store/slices/menuItemsSlice.ts';
 import { useCallback, useEffect, useState } from 'react';
-import { fetchAllMenuItems } from '../../store/thunks/contactsThunk.ts';
+import { fetchAllMenuItems, sendOrder } from '../../store/thunks/pizzaThunk.ts';
 import MenuItemClient from '../../components/menuItemClient/menuItemClient.tsx';
 import Modal from '../../components/UI/Modal/Modal.tsx';
-import { addDish, selectCartDishes } from '../../store/slices/cardSlice.ts';
+import {
+  addDish, clearCart,
+  selectCartDishes,
+  selectOrderLoading,
+  selectOrders
+} from '../../store/slices/cardSlice.ts';
 import CartDishes from '../../components/Cart/CartDishes/CartDishes.tsx';
+import { IOrder } from '../../types';
+import ButtonLoading from '../../components/UI/ButtonLoading/ButtonLoading.tsx';
 
 const ClientHome = () => {
   const [showModal, setShowModal] = useState(false);
@@ -14,9 +21,12 @@ const ClientHome = () => {
   const isFetchLoading = useAppSelector(selectFetchLoading);
   const dispatch = useAppDispatch();
   const cartDishes = useAppSelector( selectCartDishes);
+  const order = useAppSelector(selectOrders);
+  const orderLoading = useAppSelector(selectOrderLoading);
   const fetchDishes = useCallback(async () => {
     await dispatch(fetchAllMenuItems());
   }, [dispatch]);
+  const deliveryPrice = 150;
   useEffect(() => {
     {
       void fetchDishes();
@@ -26,16 +36,26 @@ const ClientHome = () => {
   const total = cartDishes.reduce((acc, cartDish) => {
     acc = acc + cartDish.dish.price * cartDish.amount;
     return acc;
-  }, 150);
+  },  deliveryPrice);
+
+  const sendPizzaOrder = async (order:IOrder[])=>{
+    await dispatch(sendOrder(order));
+    dispatch(clearCart());
+    setShowModal(false);
+  }
+
+
+
 
   return (
     <>
     <Modal show={showModal} title={'Your order:'}  closeModal={() => setShowModal(false)}> <>
-      <CartDishes total={total} cart={cartDishes}/>
-      {/*{cartDishes.length > 0 ?*/}
-      {/*  <div className="text-center">*/}
-      {/*  </div> : null*/}
-      {/*}*/}
+    {total ===  deliveryPrice? <p className={'text-center mt-5 mb-5'}> Cart is empty, add dishes to your order</p>:
+      <><CartDishes total={total} cart={cartDishes}/>
+      <div className={'d-flex justify-content-center align-items-center'}>
+        <button className={'me-3  btn btn-danger'} type={'button'} onClick={() => setShowModal(false)}>Cancel</button>
+        <ButtonLoading text={'Order'} type={'button'} isLoading={orderLoading }  isDisabled={orderLoading} onClick={()=>sendPizzaOrder(order)}/>
+      </div></>}
     </>
     </Modal>
     <div>
@@ -65,8 +85,8 @@ const ClientHome = () => {
         </p>
       )}
       <div className={'d-flex justify-content-between align-items-center'}>
-        <div>Order total (include delivery 150 KGS): {total} KGS</div>
-        <button type={'button'} className={'btn btn-primary'} onClick={()=>setShowModal(true)}>Checkout</button>
+        <div className={'mt-4 mb-4 fs-4'}><strong>Order total</strong> (include delivery 150 KGS): {total} KGS</div>
+        <button type={'button'} className={'btn btn-primary fs-4'} onClick={()=>setShowModal(true)}>Checkout</button>
       </div>
     </div></>
   );

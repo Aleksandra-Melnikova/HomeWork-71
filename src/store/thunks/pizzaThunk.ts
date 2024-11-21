@@ -1,5 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { IForm, IMenuItem, IMenuItemList } from '../../types';
+import { IForm, IMenuItem, IMenuItemList, IOrder } from '../../types';
 import axiosApi from "../../axiosAPI.ts";
 
 export const fetchAllMenuItems = createAsyncThunk<IMenuItem[], void>(
@@ -52,3 +52,11 @@ export const editMenuItem = createAsyncThunk<
 >("menuItems/editMenuItem", async ({  dishId, dish }) => {
   await axiosApi.put(`menuItems/${dishId}.json`, { ...dish });
 });
+
+export const sendOrder = createAsyncThunk<void, IOrder[]>(
+  "cart/sendOrder",
+  async (order:IOrder[]) => {
+    console.log(order);
+    await axiosApi.post("ordersPizza.json", { ...order });
+  },
+);

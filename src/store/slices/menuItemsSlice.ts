@@ -1,10 +1,10 @@
-import {  IForm, IMenuItem } from '../../types';
+import { IForm, IMenuItem, } from '../../types';
 
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import {
-  createMenuItems, deleteOneMenuItem, editMenuItem, fetchAllMenuItems, getOneMenuItemById
+  createMenuItems, deleteOneMenuItem, editMenuItem, fetchAllMenuItems, getOneMenuItemById,
 
-} from '../thunks/contactsThunk.ts';
+} from '../thunks/pizzaThunk.ts';
 import { RootState } from "../../app/store.ts";
 
 interface MenuItemState {
@@ -25,9 +25,11 @@ const initialState:  MenuItemState = {
   isFetchOneMenuItemLoading: false,
   isDeleteLoading: false,
   isEditLoading: false,
+
 };
 export const selectAddLoading = (state: RootState) =>
   state.menuItems.isAddLoading;
+
 export const selectFetchLoading = (state: RootState) =>
   state.menuItems.isFetchLoading;
 export const selectMenuItems = (state: RootState) => state.menuItems.menuItems;
@@ -101,6 +103,7 @@ export const menuItemsSlice = createSlice({
       .addCase(editMenuItem.rejected, (state) => {
         state.isEditLoading = false;
       });
+
   },
 });
 
