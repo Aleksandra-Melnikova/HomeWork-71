@@ -3,14 +3,14 @@ import React, { useEffect, useState } from "react";
 import { IForm } from "../../types";
 import { useNavigate, useParams } from "react-router-dom";
 import {
-   createMenuItems,
-   editMenuItem,
-} from '../../store/thunks/pizzaThunk.ts';
+  createMenuItems,
+  editMenuItem,
+} from "../../store/thunks/pizzaThunk.ts";
 import { useAppDispatch, useAppSelector } from "../../app/hooks.ts";
 import {
   selectAddLoading,
- selectOneMenuItem,
-} from '../../store/slices/menuItemsSlice.ts';
+  selectOneMenuItem,
+} from "../../store/slices/menuItemsSlice.ts";
 import { toast } from "react-toastify";
 
 export interface IFormProps {
@@ -123,7 +123,6 @@ const Form: React.FC<IFormProps> = ({
             isLoading={createAddLoading}
             isDisabled={createAddLoading}
           />
-
         </div>
       </form>
     </div>

@@ -1,10 +1,13 @@
-import { IForm, IMenuItem, } from '../../types';
+import { IForm, IMenuItem } from "../../types";
 
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import {
-  createMenuItems, deleteOneMenuItem, editMenuItem, fetchAllMenuItems, getOneMenuItemById,
-
-} from '../thunks/pizzaThunk.ts';
+  createMenuItems,
+  deleteOneMenuItem,
+  editMenuItem,
+  fetchAllMenuItems,
+  getOneMenuItemById,
+} from "../thunks/pizzaThunk.ts";
 import { RootState } from "../../app/store.ts";
 
 interface MenuItemState {
@@ -17,7 +20,7 @@ interface MenuItemState {
   isEditLoading: boolean;
 }
 
-const initialState:  MenuItemState = {
+const initialState: MenuItemState = {
   isAddLoading: false,
   menuItems: [],
   isFetchLoading: true,
@@ -25,7 +28,6 @@ const initialState:  MenuItemState = {
   isFetchOneMenuItemLoading: false,
   isDeleteLoading: false,
   isEditLoading: false,
-
 };
 export const selectAddLoading = (state: RootState) =>
   state.menuItems.isAddLoading;
@@ -39,7 +41,8 @@ export const selectEditLoading = (state: RootState) =>
   state.menuItems.isEditLoading;
 export const selectFetchOneMenuItemLoading = (state: RootState) =>
   state.menuItems.isFetchOneMenuItemLoading;
-export const selectOneMenuItem = (state: RootState) => state.menuItems.oneMenuItem;
+export const selectOneMenuItem = (state: RootState) =>
+  state.menuItems.oneMenuItem;
 
 export const menuItemsSlice = createSlice({
   name: "menuItems",
@@ -103,9 +106,7 @@ export const menuItemsSlice = createSlice({
       .addCase(editMenuItem.rejected, (state) => {
         state.isEditLoading = false;
       });
-
   },
 });
 
 export const menuItemsReducer = menuItemsSlice.reducer;
-

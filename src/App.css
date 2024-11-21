@@ -1,12 +1,10 @@
-
-
 .menu-item {
   height: auto;
   text-align: start;
   padding: 10px;
 }
 
-.img-block{
+.img-block {
   overflow: hidden;
 }
 
@@ -20,7 +18,7 @@
 /*  width: 100%;*/
 /*  height: auto;*/
 /*}*/
-.img-block-client{
+.img-block-client {
   width: 70%;
   height: 200px;
 }

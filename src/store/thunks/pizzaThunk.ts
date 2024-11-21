@@ -1,5 +1,11 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { IForm, IMenuItem, IMenuItemList, IOrder, IOrdersFromApi } from '../../types';
+import {
+  IForm,
+  IMenuItem,
+  IMenuItemList,
+  IOrder,
+  IOrdersFromApi,
+} from "../../types";
 import axiosApi from "../../axiosAPI.ts";
 
 export const fetchAllMenuItems = createAsyncThunk<IMenuItem[], void>(
@@ -11,7 +17,7 @@ export const fetchAllMenuItems = createAsyncThunk<IMenuItem[], void>(
     if (menuItemsList === null) {
       return [];
     }
-    const menuItems: IMenuItemList =menuItemsList;
+    const menuItems: IMenuItemList = menuItemsList;
 
     return Object.keys(menuItemsList).map((dish) => {
       return {
@@ -48,14 +54,14 @@ export const getOneMenuItemById = createAsyncThunk<IForm | null, string>(
 export const editMenuItem = createAsyncThunk<
   void,
   { dishId: string; dish: IForm }
->("menuItems/editMenuItem", async ({  dishId, dish }) => {
+>("menuItems/editMenuItem", async ({ dishId, dish }) => {
   await axiosApi.put(`menuItems/${dishId}.json`, { ...dish });
 });
 
 export const sendOrder = createAsyncThunk<void, IOrder[]>(
   "cart/sendOrder",
-  async (order:IOrder[]) => {
-    await axiosApi.post("ordersPizza.json", {...order});
+  async (order: IOrder[]) => {
+    await axiosApi.post("ordersPizza.json", { ...order });
   },
 );
 
@@ -64,21 +70,14 @@ export const fetchAllOrders = createAsyncThunk(
   async () => {
     const response: { data: IOrdersFromApi | null } =
       await axiosApi("ordersPizza.json");
+    return response.data;
 
-    // const ordersList = response.data;
+  },
+);
 
-    return response.data
-    // if (ordersList === null) {
-    //   return [];
-    // }
-
-    // const orders: IOrdersFromApi =ordersList;
-    //
-    // return Object.keys(ordersList).map((order) => {
-    //   return {
-    //     ...orders[order],
-    //     id: order,
-    //   };
-    // });
+export const deleteOneOrderItem = createAsyncThunk<void, string>(
+  "cart/deleteOneOrderItem",
+  async (orderId: string) => {
+    await axiosApi.delete(`ordersPizza/${orderId}.json`);
   },
 );

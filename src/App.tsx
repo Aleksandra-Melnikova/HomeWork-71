@@ -1,13 +1,11 @@
-
-import './App.css'
-import Layout from './components/Layout/Layout.tsx';
-import { Route, Routes } from 'react-router-dom';
-import AdminDishes from './containers/AdminDishes/AdminDishes.tsx';
-import AddMenuItem from './containers/AddMenuItem/AddMenuItem.tsx';
-import EditMenuItem from './containers/EditMenuItem/EditMenuItem.tsx';
-import ClientHome from './containers/ClientHome/ClientHome.tsx';
-import AdminOrders from './containers/AdminOrders/AdminOrders.tsx';
-
+import "./App.css";
+import Layout from "./components/Layout/Layout.tsx";
+import { Route, Routes } from "react-router-dom";
+import AdminDishes from "./containers/AdminDishes/AdminDishes.tsx";
+import AddMenuItem from "./containers/AddMenuItem/AddMenuItem.tsx";
+import EditMenuItem from "./containers/EditMenuItem/EditMenuItem.tsx";
+import ClientHome from "./containers/ClientHome/ClientHome.tsx";
+import AdminOrders from "./containers/AdminOrders/AdminOrders.tsx";
 
 const App = () => (
   <>

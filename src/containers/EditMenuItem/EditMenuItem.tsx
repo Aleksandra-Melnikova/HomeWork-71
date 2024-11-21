@@ -3,13 +3,14 @@ import { useAppDispatch, useAppSelector } from "../../app/hooks.ts";
 import Form from "../../components/Form/Form.tsx";
 import Spinner from "../../components/UI/Spinner/Spinner.tsx";
 import {
-  selectEditLoading, selectFetchOneMenuItemLoading
-  , selectOneMenuItem,
-} from '../../store/slices/menuItemsSlice.ts';
+  selectEditLoading,
+  selectFetchOneMenuItemLoading,
+  selectOneMenuItem,
+} from "../../store/slices/menuItemsSlice.ts";
 
 import { useParams } from "react-router-dom";
 import { useCallback, useEffect } from "react";
-import {  getOneMenuItemById } from '../../store/thunks/pizzaThunk.ts';
+import { getOneMenuItemById } from "../../store/thunks/pizzaThunk.ts";
 
 const EditMenuItem = () => {
   const { id } = useParams();
@@ -27,7 +28,7 @@ const EditMenuItem = () => {
     void getDishById();
   }, [getDishById]);
 
-  const fetchLoading = useAppSelector(selectFetchOneMenuItemLoading) ;
+  const fetchLoading = useAppSelector(selectFetchOneMenuItemLoading);
   return (
     <>
       {fetchLoading || editLoading ? (

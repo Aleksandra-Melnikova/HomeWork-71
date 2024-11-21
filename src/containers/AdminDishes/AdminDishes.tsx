@@ -1,15 +1,16 @@
 import { useAppDispatch, useAppSelector } from "../../app/hooks.ts";
 import {
-  selectFetchLoading, selectMenuItems,
-} from '../../store/slices/menuItemsSlice.ts';
+  selectFetchLoading,
+  selectMenuItems,
+} from "../../store/slices/menuItemsSlice.ts";
 import { useCallback, useEffect } from "react";
 import {
-   deleteOneMenuItem,
- fetchAllMenuItems,
-} from '../../store/thunks/pizzaThunk.ts';
+  deleteOneMenuItem,
+  fetchAllMenuItems,
+} from "../../store/thunks/pizzaThunk.ts";
 import MenuItem from "../../components/menuItem/menuItem.tsx";
 import Spinner from "../../components/UI/Spinner/Spinner.tsx";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 
 const AdminDishes = () => {
   const menuItems = useAppSelector(selectMenuItems);
@@ -30,20 +31,22 @@ const AdminDishes = () => {
     await fetchDishes();
   };
 
-  const onClick = ()=>{
+  const onClick = () => {
     navigate(`/admin/add`);
   };
 
   return (
     <>
-      <div className={'my-4 d-flex align-items-center justify-content-between'}>
+      <div className={"my-4 d-flex align-items-center justify-content-between"}>
         <h1>Dishes</h1>
-        <button onClick={onClick} type={"button"} className={'btn btn-primary'}>Add new Dish</button>
+        <button onClick={onClick} type={"button"} className={"btn btn-primary"}>
+          Add new Dish
+        </button>
       </div>
       {menuItems.length > 0 || isFetchLoading ? (
         <>
           {isFetchLoading ? (
-            <Spinner/>
+            <Spinner />
           ) : (
             <>
               {" "}
@@ -54,16 +57,14 @@ const AdminDishes = () => {
                   title={menuItem.title}
                   imageUrl={menuItem.imageUrl}
                   price={menuItem.price}
-                  onDelete={() =>  deleteMenuItem(menuItem.id)}
+                  onDelete={() => deleteMenuItem(menuItem.id)}
                 />
               ))}
             </>
           )}
         </>
       ) : (
-        <p className="d-block text-center mt-5">
-          No dishes
-        </p>
+        <p className="d-block text-center mt-5">No dishes</p>
       )}
     </>
   );
