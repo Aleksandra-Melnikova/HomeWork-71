@@ -1,28 +1,35 @@
-import {  IMenuItem, IOrder, MenuItemsCart } from '../../types';
+import { IMenuItem, IOrder, IOrdersFromApi, MenuItemsCart } from '../../types';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../../app/store.ts';
 import {
- sendOrder
+   fetchAllOrders,
+  sendOrder
 } from '../thunks/pizzaThunk.ts';
 
 
 interface CartState {
   cartDishes:MenuItemsCart[];
   ordersPizza: IOrder[];
+  ordersAdmin: IOrdersFromApi[];
   isOrderLoading: boolean,
+  isOrdersAdminLoading: boolean,
 }
 
 
 const initialState:CartState = {
   cartDishes:[],
   ordersPizza: [],
+  ordersAdmin: [],
   isOrderLoading: false,
+  isOrdersAdminLoading: false
 };
 
 export const selectOrderLoading = (state: RootState) =>
   state.cart.isOrderLoading;
+export const selectOrdersAdminLoading = (state: RootState) =>
+  state.cart.isOrdersAdminLoading;
 export const selectOrders = (state: RootState) => state.cart.ordersPizza;
-
+export const selectOrdersAdmin = (state: RootState) => state.cart.ordersAdmin;
 export const selectCartDishes = (state: RootState) => state.cart.cartDishes;
 
 const cartSlice = createSlice({
@@ -54,7 +61,7 @@ addDish: (state, {payload:dish}:PayloadAction<IMenuItem>)=>{
         const cartCopy = [...state.cartDishes];
       const pizzaOrdersCopy = [...state.ordersPizza];
         const copyDishCart = {...cartCopy[indexDish]};
-      let copyOneOrder = {...pizzaOrdersCopy[indexDish]};
+      const copyOneOrder = {...pizzaOrdersCopy[indexDish]};
         copyDishCart.amount--;
       copyOneOrder[dish.dish.id]--;
       pizzaOrdersCopy[indexDish] = copyOneOrder;
@@ -77,6 +84,30 @@ clearCart:(state)=>{
       })
       .addCase(sendOrder.rejected, (state) => {
         state.isOrderLoading = false;
+      })
+      .addCase(fetchAllOrders .pending, (state) => {
+        state.isOrdersAdminLoading = true;
+      })
+      .addCase(
+        fetchAllOrders .fulfilled,
+        (state,action:PayloadAction<IOrdersFromApi|null>) => {
+          state.isOrdersAdminLoading  = false;
+          if(action.payload){
+            const postResponseNew = Object.entries(action.payload);
+            const array:IOrdersFromApi[] = [];
+            for (let i = 0; i < postResponseNew.length; i++) {
+                const obj:IOrdersFromApi = {
+                  id: postResponseNew[i][0],
+                  objOrders: postResponseNew[i][1],
+                };
+                array.push(obj);
+              }
+            state.ordersAdmin= array;
+          }
+        }
+      )
+      .addCase(fetchAllOrders .rejected, (state) => {
+        state.isOrdersAdminLoading  = false;
       });
   },
 

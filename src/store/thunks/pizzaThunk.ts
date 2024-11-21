@@ -1,5 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { IForm, IMenuItem, IMenuItemList, IOrder } from '../../types';
+import { IForm, IMenuItem, IMenuItemList, IOrder, IOrdersFromApi } from '../../types';
 import axiosApi from "../../axiosAPI.ts";
 
 export const fetchAllMenuItems = createAsyncThunk<IMenuItem[], void>(
@@ -7,16 +7,15 @@ export const fetchAllMenuItems = createAsyncThunk<IMenuItem[], void>(
   async () => {
     const response: { data: IMenuItemList | null } =
       await axiosApi("menuItems.json");
-    console.log(response);
     const menuItemsList = response.data;
     if (menuItemsList === null) {
       return [];
     }
-    const contacts: IMenuItemList =menuItemsList;
+    const menuItems: IMenuItemList =menuItemsList;
 
     return Object.keys(menuItemsList).map((dish) => {
       return {
-        ...contacts[dish],
+        ...menuItems[dish],
         id: dish,
       };
     });
@@ -56,7 +55,30 @@ export const editMenuItem = createAsyncThunk<
 export const sendOrder = createAsyncThunk<void, IOrder[]>(
   "cart/sendOrder",
   async (order:IOrder[]) => {
-    console.log(order);
-    await axiosApi.post("ordersPizza.json", { ...order });
+    await axiosApi.post("ordersPizza.json", {...order});
+  },
+);
+
+export const fetchAllOrders = createAsyncThunk(
+  "cart/fetchAllOrders",
+  async () => {
+    const response: { data: IOrdersFromApi | null } =
+      await axiosApi("ordersPizza.json");
+
+    // const ordersList = response.data;
+
+    return response.data
+    // if (ordersList === null) {
+    //   return [];
+    // }
+
+    // const orders: IOrdersFromApi =ordersList;
+    //
+    // return Object.keys(ordersList).map((order) => {
+    //   return {
+    //     ...orders[order],
+    //     id: order,
+    //   };
+    // });
   },
 );
