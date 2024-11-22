@@ -1,10 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { IMenuItem } from "../../types";
 import { toast } from "react-toastify";
-import ButtonLoading from "../UI/ButtonLoading/ButtonLoading.tsx";
 import { useAppSelector } from "../../app/hooks.ts";
 import { selectDeleteLoading } from "../../store/slices/menuItemsSlice.ts";
+import ButtonSpinner from "../UI/ButtonSpinner/ButtonSpinner.tsx";
 
 export interface IMenuItemProps extends IMenuItem {
   onDelete: (id: string) => void;
@@ -19,7 +19,9 @@ const MenuItem: React.FC<IMenuItemProps> = ({
 }) => {
   const isDeleteLoading = useAppSelector(selectDeleteLoading);
   const navigate = useNavigate();
+  const [deleteId, setDeleteId] = useState("");
   const deleteOneMenuItem = async (id: string) => {
+    setDeleteId(id);
     onDelete(id);
     toast.success(`Dish was deleted successfully.`);
     navigate(`/admin`);
@@ -49,11 +51,16 @@ const MenuItem: React.FC<IMenuItemProps> = ({
             Edit
           </button>
           <div className={"d-inline-block"}>
-            <ButtonLoading
-              text={"Delete"}
-              isLoading={isDeleteLoading}
+            <button
+              className={"btn btn-primary me-2 d-inline-block pe-4"}
               onClick={() => deleteOneMenuItem(id)}
-            ></ButtonLoading>
+            >
+              {" "}
+              <span className={"me-1"}>Delete</span>
+              <>
+                {isDeleteLoading && deleteId === id ? <ButtonSpinner /> : null}
+              </>
+            </button>
           </div>
         </div>
       </div>

@@ -23,25 +23,19 @@ const ToolBar = () => {
   return (
     <>
       <nav className="navbar navbar-expand-lg bg-primary">
-        <div className="container d-flex align-items-center justify-content-between">
+        <div className="container">
           <NavLink to={navigate}>
             <span className="navbar-brand mb-0 text-white fs-1">{title}</span>
           </NavLink>
           <div className="ms-5">
             <ul className={`navbar-nav ${show}`}>
-              <li className="nav-item d-inline-block">
-                <NavLink
-                  className="nav-link btn button-add text-primary bg-white me-3 "
-                  to="/admin/dishes"
-                >
+              <li className="nav-item d-inline-block ">
+                <NavLink className={`nav-link fs-4  `} to="/admin/dishes">
                   Dishes
                 </NavLink>
               </li>
               <li className="nav-item d-inline-block">
-                <NavLink
-                  className="nav-link btn button-add text-primary bg-white "
-                  to="/admin/orders"
-                >
+                <NavLink className={`nav-link fs-4  `} to="/admin/orders">
                   Orders
                 </NavLink>
               </li>

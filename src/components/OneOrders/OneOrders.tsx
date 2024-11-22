@@ -53,9 +53,9 @@ const OneOrders: React.FC<OneOrdersProps> = ({
           <button
             type="button"
             onClick={() => deleteOrder(ordersItem.id)}
-            className="d-block btn btn-primary pe-4"
+            className="d-block btn btn-primary pe-3"
           >
-            <span>Complite order</span>
+            <span className={"me-1"}>Complete order</span>
             {children}
           </button>
         </div>

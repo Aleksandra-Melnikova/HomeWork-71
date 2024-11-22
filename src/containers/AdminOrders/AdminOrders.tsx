@@ -22,6 +22,7 @@ const AdminOrders = () => {
   const orderLoading = useAppSelector(selectOrdersAdminLoading);
   const [result, setResult] = useState<IOrdersForPage[]>([]);
   const deleteLoading = useAppSelector(selectDeleteOrderLoading);
+  const [loading, setLoading] = useState<string>("");
   useEffect(() => {
     const getOrdersForPage = () => {
       const ordersNew = orders.map((order) => {
@@ -72,6 +73,7 @@ const AdminOrders = () => {
   }, [fetchOrders]);
 
   const deleteOrder = async (id: string) => {
+    setLoading(id);
     await dispatch(deleteOneOrderItem(id));
     await dispatch(fetchAllOrders());
     if (result.length === 1) {
@@ -94,7 +96,7 @@ const AdminOrders = () => {
                   key={order.id}
                   ordersItem={order}
                 >
-                  {deleteLoading.process && deleteLoading.id === order.id ? (
+                  {deleteLoading && loading === order.id ? (
                     <ButtonSpinner />
                   ) : null}
                 </OneOrders>

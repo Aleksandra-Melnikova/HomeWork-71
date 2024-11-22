@@ -13,7 +13,7 @@ interface CartState {
   ordersAdmin: IOrdersFromApi[];
   isOrderLoading: boolean;
   isOrdersAdminLoading: boolean;
-  isDeleteOrderLoading: { process: boolean; id: string };
+  isDeleteOrderLoading: boolean;
 }
 
 const initialState: CartState = {
@@ -22,7 +22,7 @@ const initialState: CartState = {
   ordersAdmin: [],
   isOrderLoading: false,
   isOrdersAdminLoading: false,
-  isDeleteOrderLoading: { process: false, id: "" },
+  isDeleteOrderLoading: false,
 };
 
 export const selectOrderLoading = (state: RootState) =>
@@ -118,17 +118,13 @@ const cartSlice = createSlice({
         state.isOrdersAdminLoading = false;
       })
       .addCase(deleteOneOrderItem.pending, (state) => {
-        state.isDeleteOrderLoading.process = true;
+        state.isDeleteOrderLoading = true;
       })
-      .addCase(
-        deleteOneOrderItem.fulfilled,
-        (state, action: PayloadAction<string>) => {
-          state.isDeleteOrderLoading.id = action.payload;
-          state.isDeleteOrderLoading.process = false;
-        },
-      )
+      .addCase(deleteOneOrderItem.fulfilled, (state) => {
+        state.isDeleteOrderLoading = false;
+      })
       .addCase(deleteOneOrderItem.rejected, (state) => {
-        state.isDeleteOrderLoading.process = false;
+        state.isDeleteOrderLoading = false;
       });
   },
 });

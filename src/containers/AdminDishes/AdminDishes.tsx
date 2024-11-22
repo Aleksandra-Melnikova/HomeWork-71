@@ -37,7 +37,11 @@ const AdminDishes = () => {
 
   return (
     <>
-      <div className={"my-4 d-flex align-items-center justify-content-between"}>
+      <div
+        className={
+          "my-4 d-flex align-items-center justify-content-between mb-5"
+        }
+      >
         <h1>Dishes</h1>
         <button onClick={onClick} type={"button"} className={"btn btn-primary"}>
           Add new Dish
@@ -48,7 +52,7 @@ const AdminDishes = () => {
           {isFetchLoading ? (
             <Spinner />
           ) : (
-            <>
+            <div className={"mb-5"}>
               {" "}
               {menuItems.map((menuItem) => (
                 <MenuItem
@@ -60,7 +64,7 @@ const AdminDishes = () => {
                   onDelete={() => deleteMenuItem(menuItem.id)}
                 />
               ))}
-            </>
+            </div>
           )}
         </>
       ) : (

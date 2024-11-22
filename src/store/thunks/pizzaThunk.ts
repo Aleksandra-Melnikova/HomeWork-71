@@ -74,10 +74,9 @@ export const fetchAllOrders = createAsyncThunk(
   },
 );
 
-export const deleteOneOrderItem = createAsyncThunk<string, string>(
+export const deleteOneOrderItem = createAsyncThunk<void, string>(
   "cart/deleteOneOrderItem",
   async (orderId: string) => {
     await axiosApi.delete(`ordersPizza/${orderId}.json`);
-    return orderId;
   },
 );

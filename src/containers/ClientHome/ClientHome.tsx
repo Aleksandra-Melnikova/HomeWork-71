@@ -111,7 +111,9 @@ const ClientHome = () => {
         ) : (
           <p className="d-block text-center mt-5">No dishes</p>
         )}
-        <div className={"d-flex justify-content-between align-items-center"}>
+        <div
+          className={"d-flex justify-content-between align-items-center mb-4"}
+        >
           <div className={"mt-4 mb-4 fs-4"}>
             <strong>Order total</strong> (include delivery 150 KGS): {total} KGS
           </div>
