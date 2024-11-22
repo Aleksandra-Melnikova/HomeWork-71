@@ -9,21 +9,16 @@ interface Props {
   total: number;
 }
 
-const CartDishes: React.FC<Props> = ({ cart, total }) => {
+const CartAllDishes: React.FC<Props> = ({ cart, total }) => {
   const dispatch = useDispatch();
 
-  // const total = cart.reduce((acc, cartDish) => {
-  //   acc = acc + cartDish.dish.price * cartDish.amount;
-  //   return acc;
-  // }, 150);
-
-  let cartList = (
+  let cartAll = (
     <div className="alert alert-primary" role="alert">
       <h6 className="text-center my-4">No dish yet. Add something ...</h6>
     </div>
   );
   if (cart.length > 0) {
-    cartList = (
+    cartAll = (
       <div>
         {cart.map((cartDish) => (
           <CartOneDish
@@ -54,9 +49,9 @@ const CartDishes: React.FC<Props> = ({ cart, total }) => {
 
   return (
     <div>
-      <div className="row mt-2">{cartList}</div>
+      <div className="row mt-2">{cartAll}</div>
     </div>
   );
 };
 
-export default CartDishes;
+export default CartAllDishes;

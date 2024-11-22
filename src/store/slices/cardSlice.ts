@@ -1,7 +1,11 @@
 import { IMenuItem, IOrder, IOrdersFromApi, MenuItemsCart } from "../../types";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../../app/store.ts";
-import { deleteOneOrderItem, fetchAllOrders, sendOrder } from '../thunks/pizzaThunk.ts';
+import {
+  deleteOneOrderItem,
+  fetchAllOrders,
+  sendOrder,
+} from "../thunks/pizzaThunk.ts";
 
 interface CartState {
   cartDishes: MenuItemsCart[];
@@ -9,7 +13,7 @@ interface CartState {
   ordersAdmin: IOrdersFromApi[];
   isOrderLoading: boolean;
   isOrdersAdminLoading: boolean;
-  isDeleteOrderLoading: boolean;
+  isDeleteOrderLoading: { process: boolean; id: string };
 }
 
 const initialState: CartState = {
@@ -18,7 +22,7 @@ const initialState: CartState = {
   ordersAdmin: [],
   isOrderLoading: false,
   isOrdersAdminLoading: false,
-  isDeleteOrderLoading: false,
+  isDeleteOrderLoading: { process: false, id: "" },
 };
 
 export const selectOrderLoading = (state: RootState) =>
@@ -114,14 +118,18 @@ const cartSlice = createSlice({
         state.isOrdersAdminLoading = false;
       })
       .addCase(deleteOneOrderItem.pending, (state) => {
-      state.isDeleteOrderLoading = true;
-    })
-      .addCase(deleteOneOrderItem.fulfilled, (state) => {
-        state.isDeleteOrderLoading= false;
+        state.isDeleteOrderLoading.process = true;
       })
+      .addCase(
+        deleteOneOrderItem.fulfilled,
+        (state, action: PayloadAction<string>) => {
+          state.isDeleteOrderLoading.id = action.payload;
+          state.isDeleteOrderLoading.process = false;
+        },
+      )
       .addCase(deleteOneOrderItem.rejected, (state) => {
-        state.isDeleteOrderLoading = false;
-      })
+        state.isDeleteOrderLoading.process = false;
+      });
   },
 });
 export const cartReducer = cartSlice.reducer;

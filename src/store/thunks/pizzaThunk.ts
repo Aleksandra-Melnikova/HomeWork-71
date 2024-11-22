@@ -71,13 +71,13 @@ export const fetchAllOrders = createAsyncThunk(
     const response: { data: IOrdersFromApi | null } =
       await axiosApi("ordersPizza.json");
     return response.data;
-
   },
 );
 
-export const deleteOneOrderItem = createAsyncThunk<void, string>(
+export const deleteOneOrderItem = createAsyncThunk<string, string>(
   "cart/deleteOneOrderItem",
   async (orderId: string) => {
     await axiosApi.delete(`ordersPizza/${orderId}.json`);
+    return orderId;
   },
 );

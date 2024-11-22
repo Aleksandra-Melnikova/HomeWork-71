@@ -5,15 +5,18 @@ import { useEffect, useState } from "react";
 const ToolBar = () => {
   const [show, setShow] = useState<"d-block" | "d-none">("d-block");
   const location = useLocation();
-  const [title,setTitle] = useState("Turlte Pizza Admin");
+  const [navigate, setNavigate] = useState("./admin");
+  const [title, setTitle] = useState("Turlte Pizza Admin");
 
   useEffect(() => {
     if (location.pathname === "/") {
       setShow("d-none");
-     setTitle('Turlte Pizza');
+      setTitle("Turlte Pizza");
+      setNavigate("./");
     } else {
       setShow("d-block");
-      setTitle('Turlte Pizza Admin');
+      setTitle("Turlte Pizza Admin");
+      setNavigate("./admin");
     }
   }, [location.pathname]);
 
@@ -21,10 +24,8 @@ const ToolBar = () => {
     <>
       <nav className="navbar navbar-expand-lg bg-primary">
         <div className="container d-flex align-items-center justify-content-between">
-          <NavLink to="/">
-            <span className="navbar-brand mb-0 text-white fs-1">
-              {title}
-            </span>
+          <NavLink to={navigate}>
+            <span className="navbar-brand mb-0 text-white fs-1">{title}</span>
           </NavLink>
           <div className="ms-5">
             <ul className={`navbar-nav ${show}`}>

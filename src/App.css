@@ -4,21 +4,28 @@
   padding: 10px;
 }
 
+.menu-item:hover {
+  background-color: lightblue;
+}
+.menu-item:active {
+  box-shadow: 1px 1px 1px 3px lightskyblue;
+}
+
 .img-block {
   overflow: hidden;
 }
 
 .photo-img {
-  width: auto;
-  height: 190px;
+  width: 100%;
+  height: auto;
   border-radius: 15px;
 }
-/*.photo-img-client{*/
-/*  margin-left: 10px;*/
-/*  width: 100%;*/
-/*  height: auto;*/
-/*}*/
+
 .img-block-client {
+  width: 100%;
+  height: auto;
+}
+.img-block-client img {
   width: 70%;
-  height: 200px;
+  height: auto;
 }

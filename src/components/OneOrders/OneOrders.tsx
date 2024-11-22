@@ -1,30 +1,25 @@
-import ButtonLoading from "../UI/ButtonLoading/ButtonLoading.tsx";
 import OneOrderItem from "../OneOrderItem/OneOrderItem.tsx";
 import { IOrdersForPage } from "../../types";
 import React from "react";
-import { deleteOneOrderItem, fetchAllOrders } from '../../store/thunks/pizzaThunk.ts';
-import { useAppDispatch, useAppSelector } from '../../app/hooks.ts';
-import { selectDeleteOrderLoading } from '../../store/slices/cardSlice.ts';
 
-export interface OneOrdersProps {
+export interface OneOrdersProps extends React.PropsWithChildren {
   ordersItem: IOrdersForPage;
+  deleteOrder: (id: string) => void;
 }
 
-const OneOrders: React.FC<OneOrdersProps> = ({ ordersItem }) => {
-  const dispatch = useAppDispatch();
-  const deleteLoading = useAppSelector(selectDeleteOrderLoading);
+const OneOrders: React.FC<OneOrdersProps> = ({
+  ordersItem,
+  deleteOrder,
+  children,
+}) => {
   const deliveryPrice = 150;
   const total = ordersItem.order.reduce((acc, order) => {
     acc = acc + order.price * order.amount;
     return acc;
   }, deliveryPrice);
 
-  const deleteOrder = async (id: string) => {
-    await dispatch(deleteOneOrderItem(id));
-    await dispatch(fetchAllOrders());
-  };
   return (
-    <>{ordersItem.order.length > 0 ? <div
+    <div
       className={
         " rounded-1 border border-2 border-primary-subtle p-4 row justify-content-between mb-4"
       }
@@ -54,11 +49,18 @@ const OneOrders: React.FC<OneOrdersProps> = ({ ordersItem }) => {
         <div>
           <strong>{total}</strong> KGS
         </div>
-        <ButtonLoading isLoading={deleteLoading} isDisabled={deleteLoading} type={'button'}
-                       onClick={() => deleteOrder(ordersItem.id)} text={"Complete order"}/>
+        <div className={"mt-3"}>
+          <button
+            type="button"
+            onClick={() => deleteOrder(ordersItem.id)}
+            className="d-block btn btn-primary pe-4"
+          >
+            <span>Complite order</span>
+            {children}
+          </button>
+        </div>
       </div>
-    </div>: <p className={'text-center mt-5 fs-4'}>No orders</p>}
-    </>
+    </div>
   );
 };
 

@@ -15,7 +15,7 @@ import {
   selectOrderLoading,
   selectOrders,
 } from "../../store/slices/cardSlice.ts";
-import CartDishes from "../../components/Cart/CartDishes/CartDishes.tsx";
+import CartAllDishes from "../../components/Cart/CartAllDishes/CartAllDishes.tsx";
 import { IOrder } from "../../types";
 import ButtonLoading from "../../components/UI/ButtonLoading/ButtonLoading.tsx";
 
@@ -64,7 +64,7 @@ const ClientHome = () => {
             </p>
           ) : (
             <>
-              <CartDishes total={total} cart={cartDishes} />
+              <CartAllDishes total={total} cart={cartDishes} />
               <div
                 className={"d-flex justify-content-center align-items-center"}
               >

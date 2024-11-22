@@ -66,7 +66,6 @@ export const menuItemsSlice = createSlice({
         fetchAllMenuItems.fulfilled,
         (state, action: PayloadAction<IMenuItem[]>) => {
           state.isFetchLoading = false;
-          console.log(action.payload);
           state.menuItems = action.payload;
         },
       )
